@@ -48,7 +48,7 @@ goto :install_instructions
 echo.
 echo 🚀 Iniciando Unity Hub...
 start "" %UNITY_HUB_PATH%
-timeout /t 3 >nul
+ping 127.0.0.1 -n 4 > nul
 echo.
 echo 📂 SIGUIENTE: En Unity Hub:
 echo    1. Haz clic en "Add"
