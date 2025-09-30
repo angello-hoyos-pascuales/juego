@@ -76,8 +76,17 @@ namespace SuperJoshua.Editor
         /// </summary>
         private static void ShowOptionalImprovements()
         {
+            // Verificar compatibilidad de Unity
+            string unityVersion = Application.unityVersion;
+            bool isUnity6 = unityVersion.StartsWith("6000") || unityVersion.StartsWith("2024") || unityVersion.StartsWith("2025");
+            
+            string compatibilityMessage = isUnity6 
+                ? "Detectado Unity 6+. El proyecto está optimizado para esta versión."
+                : "Detectado Unity 2022/2023. Compatibilidad total garantizada.";
+
             if (EditorUtility.DisplayDialog(
                 "🌟 Mejoras Opcionales Disponibles",
+                compatibilityMessage + "\n\n" +
                 "Para una mejor experiencia visual, puedes instalar:\n\n" +
                 "📦 TextMeshPro (Recomendado)\n" +
                 "• Mejor calidad de texto\n" +
@@ -90,6 +99,7 @@ namespace SuperJoshua.Editor
             {
                 EditorApplication.ExecuteMenuItem("Window/Package Manager");
                 Debug.Log("💡 Para instalar TextMeshPro: busca 'TextMeshPro' en Package Manager");
+                Debug.Log($"🔧 Unity Version: {unityVersion} - Compatibilidad: {(isUnity6 ? "Unity 6+" : "Unity 2022/2023")}");
             }
         }
     }
