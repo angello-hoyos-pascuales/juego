@@ -44,12 +44,18 @@ namespace SuperJoshua.PowerUps
         /// <param name="player">Controlador del jugador</param>
         protected override void ApplyEffect(PlayerController player)
         {
-            // Añadir puntos al marcador
+            // Añadir monedas al marcador y sistema de vidas
+            GameManager.GameManager.Instance?.AddCoins(1);
             GameManager.GameManager.Instance?.AddScore(pointValue);
 
-            // TODO: Implementar sistema de monedas para vidas extra
-            // TODO: Añadir contador de monedas en la UI
+            // Feedback visual y sonoro
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayCoinSound();
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
 
+            // Efecto de partículas adicional al recoger moneda
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, player.transform.position, Quaternion.identity);
+
+            // TODO: Implementar contador de monedas en la UI
             Debug.Log($"¡Moneda recogida! +{pointValue} puntos");
         }
 
@@ -92,7 +98,8 @@ namespace SuperJoshua.PowerUps
         /// <param name="player">Controlador del jugador</param>
         protected override void ApplyEffect(PlayerController player)
         {
-            // Añadir puntos al marcador
+            // Añadir anillos al marcador y sistema de vidas
+            GameManager.GameManager.Instance?.AddCoins(1);
             GameManager.GameManager.Instance?.AddScore(pointValue);
 
             // Si el jugador está transformado, extender ligeramente la duración
@@ -103,6 +110,14 @@ namespace SuperJoshua.PowerUps
                 Debug.Log($"¡Anillo recogido! Transformación extendida +1 segundo");
             }
 
+            // Feedback visual y sonoro
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayRingSound();
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
+
+            // Efecto de partículas adicional al recoger anillo
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, player.transform.position, Quaternion.identity);
+
+            // TODO: Implementar contador de anillos en la UI
             Debug.Log($"¡Anillo recogido! +{pointValue} puntos");
         }
 

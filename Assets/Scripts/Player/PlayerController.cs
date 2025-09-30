@@ -54,8 +54,8 @@ namespace SuperJoshua.Player
         private float currentSpinDashForce = 20f;
 
         // Estados del Spin Dash
-        private bool isChargingSpinDash = false;
-        private bool isSpinDashing = false;
+        private boolean isChargingSpinDash = false;
+        private boolean isSpinDashing = false;
 
         #region Unity Lifecycle
 
@@ -145,20 +145,22 @@ namespace SuperJoshua.Player
 
             if (isGrounded)
             {
-                // Movimiento en el suelo
+                // Movimiento en el suelo con suavizado
                 velocityChange = (targetVelocity - rb.velocity.x) * acceleration * Time.fixedDeltaTime;
+                rb.velocity = new Vector2(
+                    Mathf.SmoothDamp(rb.velocity.x, targetVelocity, ref velocityChange, 0.08f),
+                    rb.velocity.y
+                );
             }
             else
             {
-                // Movimiento en el aire con control limitado
+                // Movimiento en el aire con control limitado y suavizado
                 velocityChange = (targetVelocity - rb.velocity.x) * acceleration * airControl * Time.fixedDeltaTime;
+                rb.velocity = new Vector2(
+                    Mathf.SmoothDamp(rb.velocity.x, targetVelocity, ref velocityChange, 0.12f),
+                    rb.velocity.y
+                );
             }
-
-            // Aplicar cambio de velocidad
-            rb.velocity = new Vector2(
-                Mathf.Clamp(rb.velocity.x + velocityChange, -currentMaxSpeed, currentMaxSpeed),
-                rb.velocity.y
-            );
 
             // Voltear sprite según la dirección
             if (horizontalInput != 0)
@@ -179,6 +181,10 @@ namespace SuperJoshua.Player
             {
                 // Realizar salto
                 rb.velocity = new Vector2(rb.velocity.x, currentJumpForce);
+
+                // Feedback visual y sonoro al saltar
+                if (animator != null) animator.SetTrigger("Jump");
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayJumpSound();
 
                 // Resetear contadores
                 coyoteTimeCounter = 0f;
@@ -328,6 +334,8 @@ namespace SuperJoshua.Player
             // Aterrizaje
             if (isGrounded && !wasGrounded)
             {
+                if (animator != null) animator.SetTrigger("Land");
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayLandSound();
                 Debug.Log("Jugador aterrizó");
             }
         }
@@ -370,6 +378,11 @@ namespace SuperJoshua.Player
             canSpinDash = stateData.canSpinDash;
             currentSpinDashForce = stateData.spinDashForce;
 
+            // Feedback visual y sonoro al cambiar de estado
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayStateChangeSound();
+            if (animator != null) animator.SetTrigger("StateChange");
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
+
             Debug.Log($"Estadísticas actualizadas para estado: {stateData.stateName}");
         }
 
@@ -391,10 +404,14 @@ namespace SuperJoshua.Player
                     // Aplastar enemigo
                     DestroyEnemy(other.gameObject);
 
-                    // Pequeño rebote hacia arriba
-                    rb.velocity = new Vector2(rb.velocity.x, currentJumpForce * 0.5f);
+                    // Rebote mejorado hacia arriba
+                    rb.velocity = new Vector2(rb.velocity.x, currentJumpForce * 0.7f);
 
-                    Debug.Log("¡Enemigo aplastado!");
+                    // Efecto visual y sonoro de rebote
+                    if (AudioManager.Instance != null) AudioManager.Instance.PlayBounceSound();
+                    if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
+
+                    Debug.Log("¡Enemigo aplastado con rebote mejorado!");
                 }
             }
         }
@@ -405,8 +422,17 @@ namespace SuperJoshua.Player
         /// <param name="enemy">GameObject del enemigo a destruir</param>
         private void DestroyEnemy(GameObject enemy)
         {
-            // TODO: Añadir efectos de partículas y sonido
-            // TODO: Añadir puntuación
+            // Efectos visuales y sonoros al derrotar enemigo
+            if (AudioManager.Instance != null) AudioManager.Instance.PlayEnemyDefeatSound();
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, enemy.transform.position, Quaternion.identity);
+
+            // Efecto de partículas adicional al derrotar enemigo
+            if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
+
+            // Añadir puntuación y bonificación
+            GameManager.GameManager.Instance?.OnEnemyDefeated();
+
+            // TODO: Añadir efectos de partículas y sonido adicionales
             Destroy(enemy);
         }
 

@@ -76,6 +76,12 @@ namespace SuperJoshua.PowerUps
                 // Efectos especiales de transformación
                 PlayTransformationEffects(player.transform.position);
 
+                // Feedback sonoro
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayTransformationSound();
+
+                // Efecto de partículas de transformación
+                if (pickupEffectPrefab != null) Instantiate(pickupEffectPrefab, player.transform.position, Quaternion.identity);
+
                 Debug.Log("¡Estrella recogida! Joshua se transforma en Sonic!");
             }
             else
