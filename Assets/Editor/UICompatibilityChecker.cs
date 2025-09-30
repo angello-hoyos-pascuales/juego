@@ -12,17 +12,17 @@ namespace SuperJoshua.Editor
         public static void CheckUICompatibility()
         {
             Debug.Log("🔍 Verificando compatibilidad de UI...");
-            
+
             string unityVersion = Application.unityVersion;
             Debug.Log($"📋 Unity Version: {unityVersion}");
-            
+
             // Verificar si Unity UI está disponible
             bool hasUIModule = System.Type.GetType("UnityEngine.UI.Text, UnityEngine.UI") != null;
             bool hasSliderModule = System.Type.GetType("UnityEngine.UI.Slider, UnityEngine.UI") != null;
-            
+
             Debug.Log($"✅ UI Text disponible: {hasUIModule}");
             Debug.Log($"✅ UI Slider disponible: {hasSliderModule}");
-            
+
             if (!hasUIModule || !hasSliderModule)
             {
                 EditorUtility.DisplayDialog(
@@ -35,7 +35,7 @@ namespace SuperJoshua.Editor
                     "¿Quieres que se abra la ventana de Package Manager?",
                     "Sí, abrir Package Manager",
                     "Cancelar");
-                    
+
                 EditorApplication.ExecuteMenuItem("Window/Package Manager");
             }
             else
@@ -47,7 +47,7 @@ namespace SuperJoshua.Editor
                     "Perfecto!");
             }
         }
-        
+
         [MenuItem("Super Joshua/Force Refresh UI References")]
         public static void ForceRefreshUI()
         {

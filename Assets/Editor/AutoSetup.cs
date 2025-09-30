@@ -71,6 +71,24 @@ namespace SuperJoshua.Editor
             Debug.Log("Auto setup reseteado. Se ejecutará la próxima vez que se abra el proyecto.");
         }
 
+        [MenuItem("Super Joshua/Show VS Code Setup Guide")]
+        public static void ShowVSCodeSetupGuide()
+        {
+            EditorUtility.DisplayDialog(
+                "🔧 Configuración VS Code para Unity",
+                "Si ves errores de 'dotnet.exe no encontrado' en VS Code:\n\n" +
+                "✅ SOLUCIONES:\n" +
+                "1. Usar Unity Editor para editar C# (Recomendado)\n" +
+                "2. Instalar .NET SDK desde Microsoft\n" +
+                "3. Configurar VS Code solo para archivos .md/.txt\n\n" +
+                "📋 NOTA IMPORTANTE:\n" +
+                "• El error NO afecta el funcionamiento del juego\n" +
+                "• Unity compila C# internamente\n" +
+                "• Super Joshua funciona perfectamente\n\n" +
+                "Consulta SOLUCION_DOTNET_ERROR.md para más detalles",
+                "Entendido");
+        }
+
         /// <summary>
         /// Muestra información sobre mejoras opcionales disponibles
         /// </summary>
@@ -79,8 +97,8 @@ namespace SuperJoshua.Editor
             // Verificar compatibilidad de Unity
             string unityVersion = Application.unityVersion;
             bool isUnity6 = unityVersion.StartsWith("6000") || unityVersion.StartsWith("2024") || unityVersion.StartsWith("2025");
-            
-            string compatibilityMessage = isUnity6 
+
+            string compatibilityMessage = isUnity6
                 ? "Detectado Unity 6+. El proyecto está optimizado para esta versión."
                 : "Detectado Unity 2022/2023. Compatibilidad total garantizada.";
 

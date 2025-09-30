@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "unity.unity-debug",
+        "kleber-swf.unity-code-snippets"
+    ],
+    "unwantedRecommendations": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.dotnet-interactive-vscode"
+    ]
+}
