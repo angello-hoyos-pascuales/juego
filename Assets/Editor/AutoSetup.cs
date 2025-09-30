@@ -36,6 +36,9 @@ namespace SuperJoshua.Editor
                         // Marcar como completado
                         EditorPrefs.SetBool(SETUP_COMPLETED_KEY, true);
 
+                        // Mostrar información sobre mejoras opcionales
+                        ShowOptionalImprovements();
+
                         EditorUtility.DisplayDialog(
                             "¡Configuración Completada!",
                             "Super Joshua está listo para jugar.\n\n" +
@@ -66,6 +69,28 @@ namespace SuperJoshua.Editor
         {
             EditorPrefs.DeleteKey(SETUP_COMPLETED_KEY);
             Debug.Log("Auto setup reseteado. Se ejecutará la próxima vez que se abra el proyecto.");
+        }
+
+        /// <summary>
+        /// Muestra información sobre mejoras opcionales disponibles
+        /// </summary>
+        private static void ShowOptionalImprovements()
+        {
+            if (EditorUtility.DisplayDialog(
+                "🌟 Mejoras Opcionales Disponibles",
+                "Para una mejor experiencia visual, puedes instalar:\n\n" +
+                "📦 TextMeshPro (Recomendado)\n" +
+                "• Mejor calidad de texto\n" +
+                "• Más opciones de formato\n" +
+                "• Rendimiento optimizado\n\n" +
+                "Instalación: Window → TextMeshPro → Import TMP Essential Resources\n\n" +
+                "¿Quieres abrir la ventana de Package Manager para instalarlo?",
+                "Sí, abrir Package Manager",
+                "Más tarde"))
+            {
+                EditorApplication.ExecuteMenuItem("Window/Package Manager");
+                Debug.Log("💡 Para instalar TextMeshPro: busca 'TextMeshPro' en Package Manager");
+            }
         }
     }
 }
