@@ -54,8 +54,8 @@ namespace SuperJoshua.Player
         private float currentSpinDashForce = 20f;
 
         // Estados del Spin Dash
-        private boolean isChargingSpinDash = false;
-        private boolean isSpinDashing = false;
+        private bool isChargingSpinDash = false;
+        private bool isSpinDashing = false;
 
         #region Unity Lifecycle
 
