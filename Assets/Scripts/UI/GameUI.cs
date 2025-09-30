@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using SuperJoshua.GameManager;
 using SuperJoshua.Player;
 
@@ -11,11 +12,11 @@ namespace SuperJoshua.UI
     public class GameUI : MonoBehaviour
     {
         [Header("UI Elements")]
-        [SerializeField] private Text scoreText;
-        [SerializeField] private Text livesText;
-        [SerializeField] private Text coinsText;
-        [SerializeField] private Text levelText;
-        [SerializeField] private Text transformationText;
+        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI livesText;
+        [SerializeField] private TextMeshProUGUI coinsText;
+        [SerializeField] private TextMeshProUGUI levelText;
+        [SerializeField] private TextMeshProUGUI transformationText;
         [SerializeField] private Slider transformationBar;
         [SerializeField] private GameObject pausePanel;
         [SerializeField] private GameObject gameOverPanel;
@@ -139,8 +140,7 @@ namespace SuperJoshua.UI
             GameObject scoreObj = new GameObject("ScoreText");
             scoreObj.transform.SetParent(transform);
 
-            scoreText = scoreObj.AddComponent<Text>();
-            scoreText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            scoreText = scoreObj.AddComponent<TextMeshProUGUI>();
             scoreText.fontSize = 36;
             scoreText.color = Color.white;
             scoreText.text = "Score: 0";
@@ -160,8 +160,7 @@ namespace SuperJoshua.UI
             GameObject livesObj = new GameObject("LivesText");
             livesObj.transform.SetParent(transform);
 
-            livesText = livesObj.AddComponent<Text>();
-            livesText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            livesText = livesObj.AddComponent<TextMeshProUGUI>();
             livesText.fontSize = 36;
             livesText.color = Color.white;
             livesText.text = "Lives: 3";
@@ -181,8 +180,7 @@ namespace SuperJoshua.UI
             GameObject coinsObj = new GameObject("CoinsText");
             coinsObj.transform.SetParent(transform);
 
-            coinsText = coinsObj.AddComponent<Text>();
-            coinsText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            coinsText = coinsObj.AddComponent<TextMeshProUGUI>();
             coinsText.fontSize = 28;
             coinsText.color = Color.yellow;
             coinsText.text = "Coins: 0";
@@ -202,8 +200,7 @@ namespace SuperJoshua.UI
             GameObject levelObj = new GameObject("LevelText");
             levelObj.transform.SetParent(transform);
 
-            levelText = levelObj.AddComponent<Text>();
-            levelText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            levelText = levelObj.AddComponent<TextMeshProUGUI>();
             levelText.fontSize = 28;
             levelText.color = Color.white;
             levelText.text = "Level: 1";
@@ -223,12 +220,11 @@ namespace SuperJoshua.UI
             GameObject transformObj = new GameObject("TransformationText");
             transformObj.transform.SetParent(transform);
 
-            transformationText = transformObj.AddComponent<Text>();
-            transformationText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            transformationText = transformObj.AddComponent<TextMeshProUGUI>();
             transformationText.fontSize = 32;
             transformationText.color = normalColor;
             transformationText.text = "Joshua";
-            transformationText.alignment = TextAnchor.MiddleCenter;
+            transformationText.alignment = TextAlignmentOptions.Center;
 
             RectTransform rect = transformationText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.5f, 1);
